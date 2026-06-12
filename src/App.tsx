@@ -37,6 +37,7 @@ function App() {
   const [showWelcome, setShowWelcome] = useState(true);
   const [isWelcomeLeaving, setIsWelcomeLeaving] = useState(false);
   const [imgError, setImgError] = useState(false);
+  const [successImgError, setSuccessImgError] = useState(false);
 
   const handleEnter = () => {
     setIsWelcomeLeaving(true);
@@ -89,6 +90,8 @@ function App() {
   const handleSubmit = () => {
     if (selectedOption) {
       setIsSubmitted(true);
+      // Trigger fireworks again on submission
+      triggerFireworks();
     }
   };
 
@@ -96,20 +99,44 @@ function App() {
     ? 'https://images.unsplash.com/photo-1513151233558-d860c5398176?q=80&w=1200&auto=format&fit=crop' 
     : '/welcome.jpg';
 
+  const successImgSrc = successImgError 
+    ? 'https://images.unsplash.com/photo-1515934751635-c81c6bc9a2d8?q=80&w=1200&auto=format&fit=crop' 
+    : '/success.jpg';
+
   if (isSubmitted) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-background p-4 relative overflow-hidden">
+      <div className="min-h-screen flex flex-col items-center justify-center bg-background p-4 relative overflow-hidden">
+        {/* Decorative background elements */}
         <div className="absolute top-10 left-10 w-32 h-32 bg-primary/20 rounded-full blur-3xl"></div>
         <div className="absolute bottom-10 right-10 w-40 h-40 bg-rose-400/20 rounded-full blur-3xl"></div>
         
-        <div className="bg-surface/80 backdrop-blur-xl p-8 md:p-12 rounded-3xl shadow-2xl text-center max-w-lg w-full transform transition-all duration-500 border border-white/20">
-          <div className="mx-auto w-20 h-20 bg-green-100 rounded-full flex items-center justify-center mb-6 shadow-inner">
-            <CheckCircle2 className="w-10 h-10 text-green-600" />
+        <div className="bg-surface/80 backdrop-blur-xl p-6 md:p-8 rounded-3xl shadow-2xl text-center max-w-lg w-full transform transition-all duration-500 border border-white/20 flex flex-col items-center relative z-10">
+          
+          {/* Polaroid Photo Frame */}
+          <div className="bg-white p-4 pb-12 rounded-2xl shadow-[0_20px_50px_rgba(0,0,0,0.15)] transform rotate-2 hover:rotate-0 transition-transform duration-500 max-w-sm w-full border border-gray-100 mb-6">
+            <div className="aspect-[4/5] bg-gray-950 overflow-hidden rounded-lg mb-4 relative shadow-inner">
+              <img 
+                src={successImgSrc} 
+                onError={() => setSuccessImgError(true)} 
+                alt="Engagement and Release Celebration" 
+                className="w-full h-full object-cover"
+              />
+            </div>
+            <div className="text-center font-medium text-xl text-neutral-800 mt-2 select-none tracking-wide">
+              מזל טוב כפול! 💍✨
+            </div>
           </div>
-          <h2 className="text-3xl md:text-4xl font-bold text-text mb-4">הבחירה נשמרה!</h2>
-          <p className="text-xl text-text-light flex items-center justify-center gap-2">
-            מחכים לחגוג איתך <Heart className="w-5 h-5 text-primary fill-primary animate-pulse" />
+
+          <h2 className="text-2xl md:text-3xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-primary to-rose-400 mb-4 leading-tight">
+            הבחירה נשמרה!
+          </h2>
+          <p className="text-xl md:text-2xl text-text font-bold leading-relaxed mb-6">
+            תמרי איזה כיף שהשתחררת והתארסת ושכל הטוב בעולם יגיע אלייך!
           </p>
+          <div className="flex items-center gap-2 text-primary">
+            <Heart className="w-6 h-6 fill-primary animate-pulse" />
+            <span className="font-bold text-lg">מחכים לחגוג איתך!</span>
+          </div>
         </div>
       </div>
     );
