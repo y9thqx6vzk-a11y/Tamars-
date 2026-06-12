@@ -177,6 +177,9 @@ function App() {
             <Utensils className="w-6 h-6 text-primary/70" />
             בחרי את התפריט לארוחת השחרור שלנו:
           </p>
+          <p className="text-sm md:text-base text-rose-500/80 font-medium mt-3 italic select-none">
+            * אין האחראים אחראים על התוצאה שנבחרה והכל באחריות הבוחרת 😉
+          </p>
         </header>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 lg:gap-8 mb-12">
